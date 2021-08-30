@@ -1,0 +1,102 @@
+<nb-card>
+    <nb-card-body>
+
+        <!-- <label class="search-label" for="search">Search:</label>
+      <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input"> -->
+
+        <!-- <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+  
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+        <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+  
+        <ng-container [nbTreeGridColumnDef]="customColumn">
+          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+            {{customColumn}}
+          </th>
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+            {{row.data[customColumn]}}
+          </td>
+        </ng-container>
+  
+        <ng-container *ngFor="let column of defaultColumns; let index = index"
+                      [nbTreeGridColumnDef]="column"
+                      [showOn]="getShowOn(index)">
+          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+            {{column}}
+          </th>
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+        </ng-container>
+  
+      </table> -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content" style="background: #fff; color: darkblue; width: 50%;">
+                <span class="close d-flex" (click)="closeModel()">&times;</span>
+                <div class="head" *ngIf="details">
+                    <div class="ml-5">
+                        <h5 style="color: darkblue;">Domain Details</h5>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w-100">
+                    <div class="body-cnt" *ngIf="details">
+                        <div class="">
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>Title : </b>
+                                <span>&nbsp;&nbsp;&nbsp;{{details.data.title}}</span>
+                            </div>
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>Country : </b>
+                                <span>&nbsp;&nbsp;&nbsp;{{details.data.country_info.name}}</span>
+                            </div>
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>IP Address : </b>
+                                <span>&nbsp;&nbsp;&nbsp;{{details.data.asn.ip}}</span>
+                            </div>
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>Language : </b>
+                                <span
+                                    *ngFor="let lang of details.data.country_info.languages;">&nbsp;&nbsp;&nbsp;{{lang}}</span>
+                            </div>
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>Status : </b>
+                                <span>&nbsp;&nbsp;&nbsp;{{details.data.country_info.status}}</span>
+                            </div>
+                            <div class="w-100 ml-5 mb-3" style="font-size: 18px;">
+                                <b>Currency : </b>
+                                <span>&nbsp;&nbsp;&nbsp;{{details.data.country_info.currencies}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <table id="customers">
+            <tr>
+                <th>#</th>
+                <th>Sub Domain</th>
+                <th>Sub Domain Id</th>
+                <th>Domain Id</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let dom of subdomains; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{dom.subDomain}}</td>
+                <td>{{dom._id}}</td>
+                <td>{{dom.domainId}}</td>
+                <td>
+                    <button class="sub-btn" (click)="viewDetails(dom)" id="myBtn">View Details</button>
+                </td>
+            </tr>
+
+        </table>
+
+    </nb-card-body>
+</nb-card>
