@@ -39,7 +39,8 @@ export class SubdomainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getDomains();
+    if (localStorage.getItem('domain'))
+      this.getDomains();
     this.modal = document.getElementById("myModal");
 
   }
@@ -90,13 +91,16 @@ export class SubdomainComponent implements OnInit {
 
   getDomains() {
     const body = {
-      domain: "king504.club",
-      domainId: "612ca84a9651c4b47a0f59e5"
+      domain: localStorage.getItem('domain').replace(/(\r\n|\n|\r)/gm, ""),
+      domainId: localStorage.getItem('domainId')
     }
     this.AuthService.postapiurl("subdomain", body).subscribe(async (resp) => {
       this.subdomains = resp.address;
       this.subdomains = this.subdomains.filter(function (el) {
         return el.subDomain != "";
+      });
+      this.subdomains = this.subdomains.filter(function (el) {
+        return el.subDomain != "\r\n";
       });
     });
   }

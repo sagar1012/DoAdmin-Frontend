@@ -95,8 +95,10 @@
                     <button class="sub-btn" (click)="viewDetails(dom)" id="myBtn">View Details</button>
                 </td>
             </tr>
-
         </table>
+        <div class="text-center mt-3" *ngIf="!subdomains.length">
+            No record found!
+        </div>
 
     </nb-card-body>
 </nb-card>
