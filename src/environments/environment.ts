@@ -11,4 +11,5 @@
 export const environment = {
   production: false,
   backendSvcURL: "http://147.182.167.86:3001/",
+  // backendSvcURL: "http://localhost:3001/",
 };

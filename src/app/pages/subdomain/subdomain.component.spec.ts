@@ -8,9 +8,9 @@ describe('SubdomainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubdomainComponent ]
+      declarations: [SubdomainComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

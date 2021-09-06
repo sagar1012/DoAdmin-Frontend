@@ -33,6 +33,8 @@ export class SubdomainComponent implements OnInit {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
   modal: any;
   details: any;
+  uuiD: any;
+  screenShot: any;
 
   constructor(private AuthService: OwnAuthService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
     this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -114,9 +116,45 @@ export class SubdomainComponent implements OnInit {
     }
     this.AuthService.postapiurl("urlScan", body).subscribe(async (resp) => {
       console.log(resp);
+      this.scanForGUID(item.subDomain.replace(/(\r\n|\n|\r)/gm, ""));
       this.details = resp.address;
     });
   }
+
+  scanForGUID(url) {
+    this.AuthService.postapiurl("urlScan/guid", {
+      url: url
+    }).subscribe(async (resp) => {
+      this.uuiD = resp.address.uuid;
+      setTimeout(() => {
+        this.screenShot = "https://urlscan.io/screenshots/" + (resp.address.uuid).toString() + ".png";
+      }, 1000);
+      // this.getScreenShot(resp);
+
+    });
+  }
+
+  getScreenShot(data) {
+    const body = {
+      uuid: data.address.uuid,
+      name: this.getRandomString(10)
+    }
+    console.log(body);
+
+    this.AuthService.postapiurl("urlScan/screenshot", body).subscribe(async (resp) => {
+      console.log(resp);
+    });
+  }
+
+  getRandomString(length) {
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for (var i = 0; i < length; i++) {
+      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+  }
+
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 400;

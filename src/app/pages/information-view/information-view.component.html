@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="head">
+        <h5 class="head-tx">Overview</h5>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 pl-0 pr-0 row">
+            <div class="col-3 p-1" *ngIf="details">
+                <div class="brd-cls">
+                    <div class="text-center head-tx mt-2"><b>Basic Information</b></div>
+                    <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
+                    <div class="ml-3 mt-2">
+                        <b>Title</b>
+                    </div>
+                    <div class="mt-1 ml-3">{{details.data.title}}</div>
+                    <div class="ml-3 mt-2">
+                        <b>Country</b>
+                    </div>
+                    <div class="mt-1 ml-3">{{details.data.country_info.name}}</div>
+                    <div class="ml-3 mt-2">
+                        <b>Currency</b>
+                    </div>
+                    <div class="mt-1 ml-3">{{details.data.country_info.currencies}}</div>
+                    <div class="ml-3 mt-2">
+                        <b>Language</b>
+                    </div>
+                    <div class="mt-1 ml-3 mb-3"><span
+                            *ngFor="let lang of details.data.country_info.languages;">&nbsp;&nbsp;&nbsp;{{lang}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 p-1" *ngIf="details">
+                <div class="brd-cls">
+                    <div class="text-center head-tx mt-2"><b>Details</b></div>
+                    <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
+                    <div class="ml-3 mt-2">
+                        <b>IP Address</b>
+                    </div>
+                    <div class="mt-1 ml-3">{{details.data.asn.ip}}</div>
+                    <div class="ml-3 mt-2">
+                        <b>Status</b>
+                    </div>
+                    <div class="mt-1 ml-3 mb-3">{{details.data.country_info.status}}</div>
+                </div>
+            </div>
+            <div class="col-6 p-1">
+                <div class="brd-cls">
+                    <div class="text-center head-tx mt-2"><b>DNS Records</b></div>
+                    <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
+                    <div class="border-warning p-2 text-warning m-2"
+                        style="border-radius: 4px; border: 1px solid #ffaa00;">
+                        DNS
+                        Information not available...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-12 col-md-12 pl-0 pr-0 row">
+            <div class="col-6 p-1">
+                <div class="brd-cls">
+                    <div class="text-center head-tx mt-2"><b>Domain WHOIS</b></div>
+                    <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
+                    <div class="border-warning p-2 text-warning m-2"
+                        style="border-radius: 4px; border: 1px solid #ffaa00;">
+                        Domain
+                        WHOIS not available...</div>
+
+                </div>
+            </div>
+            <div class="col-6 p-1">
+                <div class="brd-cls">
+                    <div class="text-center head-tx mt-2"><b>Screenshot</b></div>
+                    <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
+                    <div class="border-warning p-2 text-warning m-2" *ngIf="!screenShot"
+                        style="border-radius: 4px; border: 1px solid #ffaa00;">
+                        Screenshot not available...</div>
+                    <div class="m-2">
+                        <img height="auto" width="300" [src]="screenShot" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

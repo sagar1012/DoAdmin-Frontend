@@ -11,6 +11,7 @@ import { DomainsComponent } from './domains/domains.component';
 import { TablesRoutingModule } from './tables/tables-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SubdomainComponent } from './subdomain/subdomain.component';
+import { InformationViewComponent } from './information-view/information-view.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { SubdomainComponent } from './subdomain/subdomain.component';
     PagesComponent,
     DomainsComponent,
     SubdomainComponent,
+    InformationViewComponent,
   ],
 })
 export class PagesModule {
