@@ -83,7 +83,15 @@
 
         </div>
 
+        <div class="mt-2 mb-5 w-50">
+            <div class="mb-2"><b>Select Domain :</b></div>
+            <select class="form-control" name="domain" id="dimainId" (change)="changeDomain($event.target.value)">
+                <option value="" disabled selected> Select Domain for filter</option>
+                <option [value]="dom._id" *ngFor="let dom of domains;">{{dom.domain}}</option>
+            </select>
+        </div>
 
+        <div class="mb-2"><b>Sub Domains :</b></div>
         <table id="customers">
             <tr>
                 <th>#</th>
@@ -98,7 +106,8 @@
                 <td>{{dom._id}}</td>
                 <td>{{dom.domainId}}</td>
                 <td>
-                    <button class="sub-btn" (click)="viewDetails(dom)" id="myBtn">View Details</button>
+                    <button class="sub-btn" (click)="viewDetails(dom)" id="myBtn"
+                        [routerLink]="['/pages/screenshot']">View Details</button>
                 </td>
             </tr>
         </table>

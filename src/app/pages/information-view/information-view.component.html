@@ -1,7 +1,23 @@
 <div class="container">
-    <div class="head">
+    <div class="head" style="margin-left: -30px;">
         <h5 class="head-tx">Overview</h5>
     </div>
+    <div class="mt-2 mb-3 w-50" style="margin-left: -30px;">
+        <div class="mb-2"><b>Domain :</b></div>
+        <select class="form-control" name="domain" id="dimainId" (change)="changeDomain($event.target.value)">
+            <option value="" disabled selected> Select Domain</option>
+            <option [value]="dom._id" *ngFor="let dom of domains;">{{dom.domain}}</option>
+        </select>
+    </div>
+
+    <div class="mb-5 w-50" style="margin-left: -30px;" *ngIf="subdomains && subdomains.length">
+        <div class="mb-2"><b>Sub Domain :</b></div>
+        <select class="form-control" name="subdomain" id="subdomainId" (change)="changeSubDomain($event.target.value)">
+            <option value="" disabled selected> Select Sub Domain</option>
+            <option [value]="dom._id" *ngFor="let dom of subdomains;">{{dom.subDomain}}</option>
+        </select>
+    </div>
+
     <div class="row">
         <div class="col-sm-12 col-md-12 pl-0 pr-0 row">
             <div class="col-3 p-1" *ngIf="details">
@@ -12,18 +28,20 @@
                         <b>Title</b>
                     </div>
                     <div class="mt-1 ml-3">{{details.data.title}}</div>
-                    <div class="ml-3 mt-2">
+                    <div class="ml-3 mt-2" *ngIf="details.data.country_info">
                         <b>Country</b>
                     </div>
-                    <div class="mt-1 ml-3">{{details.data.country_info.name}}</div>
-                    <div class="ml-3 mt-2">
+                    <div class="mt-1 ml-3" *ngIf="details.data.country_info">
+                        {{details.data.country_info.name}}</div>
+                    <div class="ml-3 mt-2" *ngIf="details.data.country_info">
                         <b>Currency</b>
                     </div>
-                    <div class="mt-1 ml-3">{{details.data.country_info.currencies}}</div>
-                    <div class="ml-3 mt-2">
+                    <div class="mt-1 ml-3" *ngIf="details.data.country_info">{{details.data.country_info.currencies}}
+                    </div>
+                    <div class="ml-3 mt-2" *ngIf="details.data.country_info">
                         <b>Language</b>
                     </div>
-                    <div class="mt-1 ml-3 mb-3"><span
+                    <div class="mt-1 ml-3 mb-3" *ngIf="details.data.country_info"><span
                             *ngFor="let lang of details.data.country_info.languages;">&nbsp;&nbsp;&nbsp;{{lang}}</span>
                     </div>
                 </div>
@@ -32,39 +50,96 @@
                 <div class="brd-cls">
                     <div class="text-center head-tx mt-2"><b>Details</b></div>
                     <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
-                    <div class="ml-3 mt-2">
+                    <div class="ml-3 mt-2" *ngIf="details.data.asn">
                         <b>IP Address</b>
                     </div>
-                    <div class="mt-1 ml-3">{{details.data.asn.ip}}</div>
-                    <div class="ml-3 mt-2">
+                    <div class="mt-1 ml-3" *ngIf="details.data.asn">{{details.data.asn.ip}}</div>
+                    <div class="ml-3 mt-2" *ngIf="details.data.country_info">
                         <b>Status</b>
                     </div>
-                    <div class="mt-1 ml-3 mb-3">{{details.data.country_info.status}}</div>
+                    <div class="mt-1 ml-3 mb-3" *ngIf="details.data.country_info">{{details.data.country_info.status}}
+                    </div>
                 </div>
             </div>
-            <div class="col-6 p-1">
+            <div class="col-6 p-1" *ngIf="details">
                 <div class="brd-cls">
                     <div class="text-center head-tx mt-2"><b>DNS Records</b></div>
                     <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
-                    <div class="border-warning p-2 text-warning m-2"
+                    <div class="border-warning p-2 text-warning m-2" *ngIf="details && !details.data.asn"
                         style="border-radius: 4px; border: 1px solid #ffaa00;">
                         DNS
                         Information not available...</div>
+                    <div *ngIf="details.data.asn" class="mb-2">
+                        <div class="ml-3 mt-2">
+                            <b>ASN</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.asn.asn}}</div>
+                        <div class="ml-3 mt-2">
+                            <b>Description</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.asn.description}}</div>
+                        <div class="ml-3 mt-2">
+                            <b>IP</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.asn.ip}}</div>
+                        <div class="ml-3 mt-2">
+                            <b>Registrar</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.asn.registrar}}</div>
+                        <div class="ml-3 mt-2">
+                            <b>Route</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.asn.route}}</div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-sm-12 col-md-12 pl-0 pr-0 row">
-            <div class="col-6 p-1">
+            <div class="col-6 p-1" *ngIf="details">
                 <div class="brd-cls">
                     <div class="text-center head-tx mt-2"><b>Domain WHOIS</b></div>
                     <div class="w-100 mt-2 mb-2" style="background: #4f4f4f; height: 1px;"></div>
-                    <div class="border-warning p-2 text-warning m-2"
+                    <div class="border-warning p-2 text-warning m-2" *ngIf="details && !details.data.whois_json"
                         style="border-radius: 4px; border: 1px solid #ffaa00;">
                         Domain
                         WHOIS not available...</div>
-
+                    <div *ngIf="details.data.whois_json">
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Admin Name</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.adminName}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Admin Organization</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.adminOrganization}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Admin Phone</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.adminPhone}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Admin PostalCode</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.adminPostalCode}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Server Name</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.nameServer}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Registrant Email</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.registrantEmail}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Registrar Whois Server</b>
+                        </div>
+                        <div class="mt-1 ml-3">{{details.data.whois_json.registrarWhoisServer}}</div>
+                        <div class="ml-3 mt-2" *ngIf="details.data.country_info">
+                            <b>Tech Country</b>
+                        </div>
+                        <div class="mt-1 mb-2 ml-3">{{details.data.whois_json.techCountry}}</div>
+                    </div>
                 </div>
             </div>
             <div class="col-6 p-1">

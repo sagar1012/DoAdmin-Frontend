@@ -12,6 +12,7 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SubdomainComponent } from './subdomain/subdomain.component';
 import { InformationViewComponent } from './information-view/information-view.component';
+import { DirectoryDashboardComponent } from './directory-dashboard/directory-dashboard.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { InformationViewComponent } from './information-view/information-view.co
     DomainsComponent,
     SubdomainComponent,
     InformationViewComponent,
+    DirectoryDashboardComponent,
   ],
 })
 export class PagesModule {

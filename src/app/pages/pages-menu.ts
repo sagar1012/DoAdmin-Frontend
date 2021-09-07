@@ -22,7 +22,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Directory Dashboard',
     // icon: 'edit-2-outline',
-    link: '/pages/main-domain',
+    link: '/pages/directory',
     home: true,
   },
   {

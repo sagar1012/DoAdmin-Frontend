@@ -35,9 +35,10 @@ export class SubdomainComponent implements OnInit {
   details: any;
   uuiD: any;
   screenShot: any;
+  domains: any;
 
   constructor(private AuthService: OwnAuthService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
+    // this.dataSource = this.dataSourceBuilder.create(this.data);
   }
 
   ngOnInit() {
@@ -45,6 +46,7 @@ export class SubdomainComponent implements OnInit {
       this.getDomains();
     this.modal = document.getElementById("myModal");
 
+    this.getDomainList();
   }
 
   closeModel() {
@@ -65,31 +67,18 @@ export class SubdomainComponent implements OnInit {
     return NbSortDirection.NONE;
   }
 
-  private data: TreeNode<FSEntry>[] = [
-    {
-      data: { name: 'Projects', size: '1.8 MB', items: 5, kind: 'dir' },
-      children: [
-        { data: { name: 'project-1.doc', kind: 'doc', size: '240 KB' } },
-        { data: { name: 'project-2.doc', kind: 'doc', size: '290 KB' } },
-        { data: { name: 'project-3', kind: 'txt', size: '466 KB' } },
-        { data: { name: 'project-4.docx', kind: 'docx', size: '900 KB' } },
-      ],
-    },
-    {
-      data: { name: 'Reports', kind: 'dir', size: '400 KB', items: 2 },
-      children: [
-        { data: { name: 'Report 1', kind: 'doc', size: '100 KB' } },
-        { data: { name: 'Report 2', kind: 'doc', size: '300 KB' } },
-      ],
-    },
-    {
-      data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-      children: [
-        { data: { name: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-        { data: { name: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-      ],
-    },
-  ];
+  getDomainList() {
+    this.AuthService.postapiurl("fetchZIP/get").subscribe(async (resp) => {
+      this.domains = resp.data.data;
+    });
+  }
+
+  changeDomain(value) {
+    const result = this.domains.filter(item => { return item._id == value });
+    localStorage.setItem('domain', result[0].domain);
+    localStorage.setItem('domainId', result[0]._id);
+    this.getDomains();
+  }
 
   getDomains() {
     const body = {
@@ -108,12 +97,15 @@ export class SubdomainComponent implements OnInit {
   }
 
   viewDetails(item) {
-    this.openModel();
+    // this.openModel();
 
     const body = {
       subDomainId: item._id,
       url: item.subDomain.replace(/(\r\n|\n|\r)/gm, "")
     }
+    localStorage.setItem('subDomainId', item._id);
+    localStorage.setItem('subUrl', item.subDomain.replace(/(\r\n|\n|\r)/gm, ""));
+
     this.AuthService.postapiurl("urlScan", body).subscribe(async (resp) => {
       console.log(resp);
       this.scanForGUID(item.subDomain.replace(/(\r\n|\n|\r)/gm, ""));

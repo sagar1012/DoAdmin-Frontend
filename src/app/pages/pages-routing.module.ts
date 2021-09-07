@@ -8,6 +8,7 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import { DomainsComponent } from './domains/domains.component';
 import { SubdomainComponent } from './subdomain/subdomain.component';
 import { InformationViewComponent } from './information-view/information-view.component';
+import { DirectoryDashboardComponent } from './directory-dashboard/directory-dashboard.component';
 
 const routes: Routes = [{
   path: '',
@@ -78,6 +79,10 @@ const routes: Routes = [{
     {
       path: 'sub-domain',
       component: SubdomainComponent,
+    },
+    {
+      path: 'directory',
+      component: DirectoryDashboardComponent,
     },
     {
       path: 'screenshot',

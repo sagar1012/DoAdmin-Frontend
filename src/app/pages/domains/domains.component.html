@@ -35,15 +35,16 @@
         <th>#</th>
         <th>Domain</th>
         <th>Domain Id</th>
-        <th>Action</th>
+        <!-- <th>Action</th> -->
       </tr>
-      <tr *ngFor="let dom of domains; let i=index;">
+      <tr class="pointer" *ngFor="let dom of domains; let i=index;" (click)="subDomain(dom)"
+        [routerLink]="['/pages/sub-domain']">
         <td>{{i+1}}</td>
         <td>{{dom.domain}}</td>
         <td>{{dom._id}}</td>
-        <td>
+        <!-- <td>
           <button (click)="subDomain(dom)" class="sub-btn" [routerLink]="['/pages/sub-domain']">Sub Domains</button>
-        </td>
+        </td> -->
       </tr>
 
     </table>

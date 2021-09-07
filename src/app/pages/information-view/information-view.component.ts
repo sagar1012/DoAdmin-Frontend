@@ -11,22 +11,63 @@ export class InformationViewComponent implements OnInit {
   details: any;
   uuiD: any;
   screenShot: any;
+  domains: any;
+  subdomains: any;
 
   constructor(private AuthService: OwnAuthService,) { }
 
   ngOnInit(): void {
-    this.viewDetails()
+    this.viewDetails();
+    this.getDomainList();
+  }
+
+  getDomainList() {
+    this.AuthService.postapiurl("fetchZIP/get").subscribe(async (resp) => {
+      this.domains = resp.data.data;
+    });
+  }
+
+  changeDomain(value) {
+    const result = this.domains.filter(item => { return item._id == value });
+    localStorage.setItem('domain', result[0].domain);
+    localStorage.setItem('domainId', result[0]._id);
+    this.getDomains();
+  }
+
+  changeSubDomain(value) {
+    const result = this.subdomains.filter(item => { return item._id == value });
+    localStorage.setItem('subUrl', result[0].subDomain);
+    localStorage.setItem('subDomainId', result[0]._id);
+    this.viewDetails();
+  }
+
+  getDomains() {
+    const body = {
+      domain: localStorage.getItem('domain').replace(/(\r\n|\n|\r)/gm, ""),
+      domainId: localStorage.getItem('domainId')
+    }
+    this.AuthService.postapiurl("subdomain", body).subscribe(async (resp) => {
+      this.subdomains = resp.address;
+      this.subdomains = this.subdomains.filter(function (el) {
+        return el.subDomain != "";
+      });
+      this.subdomains = this.subdomains.filter(function (el) {
+        return el.subDomain != "\r\n";
+      });
+    });
   }
 
   viewDetails(item?) {
 
     const body = {
-      subDomainId: "613614df497fb1478412619c",
-      url: "17andrewroadeastchester.com"
+      subDomainId: localStorage.getItem('subDomainId'),
+      url: localStorage.getItem('subUrl')
     }
     this.AuthService.postapiurl("urlScan", body).subscribe(async (resp) => {
       this.scanForGUID("17andrewroadeastchester.com");
       this.details = resp.address;
+      console.log(this.details.data.asn);
+
     });
   }
 
