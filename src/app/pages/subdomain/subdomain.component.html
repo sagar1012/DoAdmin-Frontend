@@ -103,10 +103,10 @@
             <tr *ngFor="let dom of subdomains; let i=index;">
                 <td>{{i+1}}</td>
                 <td>{{dom.subDomain}}</td>
-                <td>{{dom._id}}</td>
-                <td>{{dom.domainId}}</td>
+                <td *ngIf="!notFound">{{dom._id}}</td>
+                <td *ngIf="!notFound">{{dom.domainId}}</td>
                 <td>
-                    <button class="sub-btn" (click)="viewDetails(dom)" id="myBtn"
+                    <button *ngIf="!notFound" class="sub-btn" (click)="viewDetails(dom)" id="myBtn"
                         [routerLink]="['/pages/screenshot']">View Details</button>
                 </td>
             </tr>

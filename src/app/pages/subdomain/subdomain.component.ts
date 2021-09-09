@@ -36,6 +36,7 @@ export class SubdomainComponent implements OnInit {
   uuiD: any;
   screenShot: any;
   domains: any;
+  notFound: boolean = false;
 
   constructor(private AuthService: OwnAuthService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
     // this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -70,6 +71,17 @@ export class SubdomainComponent implements OnInit {
   getDomainList() {
     this.AuthService.postapiurl("fetchZIP/get").subscribe(async (resp) => {
       this.domains = resp.data.data;
+
+      this.domains.map(domain => {
+
+        if (domain._id == localStorage.getItem('domainId')) {
+          console.log(domain._id, 'matched');
+
+          if (<HTMLInputElement>document.getElementById("dimainId") && (<HTMLInputElement>document.getElementById("dimainId")).value)
+            (<HTMLInputElement>document.getElementById("dimainId")).value = domain._id;
+
+        }
+      })
     });
   }
 
@@ -87,6 +99,11 @@ export class SubdomainComponent implements OnInit {
     }
     this.AuthService.postapiurl("subdomain", body).subscribe(async (resp) => {
       this.subdomains = resp.address;
+      if (this.subdomains[0].subDomain == "\r\nNo subdomains found.") {
+        this.notFound = true;
+      } else {
+        this.notFound = false;
+      }
       this.subdomains = this.subdomains.filter(function (el) {
         return el.subDomain != "";
       });
@@ -131,7 +148,6 @@ export class SubdomainComponent implements OnInit {
       uuid: data.address.uuid,
       name: this.getRandomString(10)
     }
-    console.log(body);
 
     this.AuthService.postapiurl("urlScan/screenshot", body).subscribe(async (resp) => {
       console.log(resp);

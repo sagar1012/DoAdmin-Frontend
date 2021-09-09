@@ -13,6 +13,7 @@ export class InformationViewComponent implements OnInit {
   screenShot: any;
   domains: any;
   subdomains: any;
+  ports: any;
 
   constructor(private AuthService: OwnAuthService,) { }
 
@@ -67,7 +68,7 @@ export class InformationViewComponent implements OnInit {
       this.scanForGUID("17andrewroadeastchester.com");
       this.details = resp.address;
       console.log(this.details.data.asn);
-
+      this.scanForPorts(localStorage.getItem('subUrl'));
     });
   }
 
@@ -84,5 +85,14 @@ export class InformationViewComponent implements OnInit {
     });
   }
 
+
+  scanForPorts(url) {
+    this.AuthService.postapiurl("urlScan/getport", {
+      url: url
+    }).subscribe(async (resp) => {
+      this.ports = resp.ports;
+
+    });
+  }
 
 }

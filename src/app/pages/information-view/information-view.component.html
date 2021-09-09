@@ -54,6 +54,15 @@
                         <b>IP Address</b>
                     </div>
                     <div class="mt-1 ml-3" *ngIf="details.data.asn">{{details.data.asn.ip}}</div>
+                    <div class="ml-3 mt-2" *ngIf="ports">
+                        <b>Ports</b>
+                    </div>
+                    <div class="mt-1 ml-3 row" *ngIf="ports">
+                        <span *ngFor="let port of ports;">{{port}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="mt-1 ml-3 row" *ngIf="!ports">
+                        <span *ngFor="let port of ports;">No Open Ports found</span>
+                    </div>
                     <div class="ml-3 mt-2" *ngIf="details.data.country_info">
                         <b>Status</b>
                     </div>
