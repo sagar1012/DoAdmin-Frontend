@@ -13,16 +13,20 @@ export class ApiService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  get(url: string, headers?: HttpHeaders, params?: HttpParams,active?: boolean): Observable<any> {
-    return this.http.get(API_URL + url, { headers: headers, params }).pipe(map((resp: any) => this.handleErrors(resp,active)));
+  get(url: string, headers?: HttpHeaders, params?: HttpParams, active?: boolean, other?: boolean): Observable<any> {
+    if (!other) {
+      return this.http.get(API_URL + url, { headers: headers, params }).pipe(map((resp: any) => this.handleErrors(resp, active)));
+    } else {
+      return this.http.get(url, { headers: headers, params }).pipe(map((resp: any) => this.handleErrors(resp, active)));
+    }
   }
 
-  post(url: string, body?: object, headers?: HttpHeaders,active?: boolean): Observable<any> {
-    return this.http.post(API_URL + url, body, { headers: headers }).pipe(map((resp: any) => this.handleErrors(resp,active)));
+  post(url: string, body?: object, headers?: HttpHeaders, active?: boolean): Observable<any> {
+    return this.http.post(API_URL + url, body, { headers: headers }).pipe(map((resp: any) => this.handleErrors(resp, active)));
   }
 
-  bagmakers(url: string, body?: object, headers?: HttpHeaders,active?: boolean): Observable<any> {
-    return this.http.post(url, body, { headers: headers }).pipe(map((resp: any) => this.handleErrors(resp,active)));
+  bagmakers(url: string, body?: object, headers?: HttpHeaders, active?: boolean): Observable<any> {
+    return this.http.post(url, body, { headers: headers }).pipe(map((resp: any) => this.handleErrors(resp, active)));
   }
 
   // get(url: string, headers?: HttpHeaders, params?: HttpParams, ): Observable<any> {
@@ -73,7 +77,7 @@ export class ApiService {
     //    else{
     //     this.ToastrService.error(resp['message'], 'Error');
     //    }
-      
+
     //     break;
     //   case 422:
     //     // Resource Not Found

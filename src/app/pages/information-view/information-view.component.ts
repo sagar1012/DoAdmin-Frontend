@@ -14,6 +14,7 @@ export class InformationViewComponent implements OnInit {
   domains: any;
   subdomains: any;
   ports: any;
+  isLoading: boolean = false;
 
   constructor(private AuthService: OwnAuthService,) { }
 
@@ -67,8 +68,12 @@ export class InformationViewComponent implements OnInit {
     this.AuthService.postapiurl("urlScan", body).subscribe(async (resp) => {
       this.scanForGUID("17andrewroadeastchester.com");
       this.details = resp.address;
-      console.log(this.details.data.asn);
-      this.scanForPorts(localStorage.getItem('subUrl'));
+      console.log(this.details.data.asn.ip);
+      if (this.details.data.asn) {
+        localStorage.setItem('subUrlIP', this.details.data.asn.ip);
+
+        this.scanForPorts(localStorage.getItem('subUrlIP'));
+      }
     });
   }
 
@@ -79,19 +84,20 @@ export class InformationViewComponent implements OnInit {
       this.uuiD = resp.address.uuid;
       setTimeout(() => {
         this.screenShot = "https://urlscan.io/screenshots/" + (resp.address.uuid).toString() + ".png";
-      }, 1000);
+      }, 120000);
       // this.getScreenShot(resp);
 
     });
   }
 
 
-  scanForPorts(url) {
+  scanForPorts(ip) {
+    this.isLoading = true;
     this.AuthService.postapiurl("urlScan/getport", {
-      url: url
+      ip: ip
     }).subscribe(async (resp) => {
-      this.ports = resp.ports;
-
+      this.ports = resp.address;
+      this.isLoading = false;
     });
   }
 

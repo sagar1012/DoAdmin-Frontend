@@ -21,8 +21,8 @@ export class OwnAuthService {
   private currentUserSubject = new BehaviorSubject<any>(new Object());
   private currentUserObservable = this.currentUserSubject.pipe(distinctUntilChanged());
 
-  constructor( private router: Router, private apiService: ApiService,
-    ) {
+  constructor(private router: Router, private apiService: ApiService,
+  ) {
 
     const source = interval(10000);
     this.subscription = source.subscribe(val => this.init());
@@ -82,6 +82,10 @@ export class OwnAuthService {
 
   getapiurl(apiname, headers?: any | null, params?: any | null, active: boolean = false) {
     return this.apiService.get(apiname, headers, params, active);
+  }
+
+  getnewapiurl(apiname, headers?: any | null, params?: any | null, active: boolean = false) {
+    return this.apiService.get(apiname, headers, params, active, true);
   }
 
 }

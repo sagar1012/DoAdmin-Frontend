@@ -54,11 +54,15 @@
                         <b>IP Address</b>
                     </div>
                     <div class="mt-1 ml-3" *ngIf="details.data.asn">{{details.data.asn.ip}}</div>
-                    <div class="ml-3 mt-2" *ngIf="ports">
-                        <b>Ports</b>
+                    <div class="ml-3 mt-2">
+                        <b>Open Ports</b>
                     </div>
-                    <div class="mt-1 ml-3 row" *ngIf="ports">
-                        <span *ngFor="let port of ports;">{{port}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <div class="spinner-border text-primary text-small"
+                        style="height: 16px; width: 16px; margin-left: 16px;" role="status" *ngIf="isLoading">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="mt-1 ml-3 row" *ngIf="!isLoading && ports">
+                        <span *ngFor="let port of ports;">{{port.port}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     </div>
                     <div class="mt-1 ml-3 row" *ngIf="!ports">
                         <span *ngFor="let port of ports;">No Open Ports found</span>
